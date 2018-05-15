@@ -1,3 +1,6 @@
+soeW -- 2018-05-14 23:39:05
+Added design document to repo
+
 soeW -- 2018-05-08 13:40:44
 Added Devlog
 
