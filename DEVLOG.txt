@@ -4,3 +4,6 @@ Added design document to repo
 soeW -- 2018-05-08 13:40:44
 Added Devlog
 
+chenX -- 2018-05-17 13:52:00
+Moved files for login. Need to add logout button and also fix bug for signing up for existing account and signing in an account that doesn't exist
+
