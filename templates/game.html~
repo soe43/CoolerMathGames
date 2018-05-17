@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+
+  <style>
+    #cvs {
+    border: 2px solid black;
+    }
+    
+    <body>
+      
+    <svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" id="cvs">
+    </svg>
+
+    <script type="text/javascript" src="{{url_for('static', filename='js/game.js')}}"></script>
+    
+  </body>
+</html>
