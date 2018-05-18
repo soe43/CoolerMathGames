@@ -9,6 +9,6 @@ var drawTank = function(id, x, y, orientation){
     rect.setAttribute("height", 20);
     rect.setAttribute("rx", 5);
     rect.setAttribute("ry", 5);
-    rect.setAttribute("orientation",
+    rect.setAttribute("orientation", orientation);
     svg.appendChild(rect);
 }
