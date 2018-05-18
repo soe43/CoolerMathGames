@@ -46,6 +46,12 @@ def game():
 def error():
     return render_template ('error.html') #basic error page that leads back to home/login page
 
+@myapp.route('/logout/', methods= ['GET', 'POST'])
+def logout():
+    session.pop('user')            #ends the session for the user
+    return redirect(url_for('root'))      #redirects back to the login page
+
+
 if __name__ == '__main__':
     myapp.debug = True
     myapp.run()        #runs the app
