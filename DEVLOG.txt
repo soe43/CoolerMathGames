@@ -10,3 +10,6 @@ Moved files for login. Need to add logout button and also fix bug for signing up
 chenX -- 2018-05-17 13:59:41
 fixed center issue
 
+chenX -- 2018-05-18 13:39:46
+error pages for wrong user/pass works
+

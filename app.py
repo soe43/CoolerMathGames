@@ -41,7 +41,11 @@ def home():
 @myapp.route('/game/', methods = ['GET','POST'])
 def game():
     return render_template('game.html')
-    
+
+@myapp.route('/error/', methods = ['GET', 'POST'])
+def error():
+    return render_template ('error.html') #basic error page that leads back to home/login page
+
 if __name__ == '__main__':
     myapp.debug = True
     myapp.run()        #runs the app
