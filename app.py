@@ -36,6 +36,11 @@ def home():
                     return render_template('listUsers.html', USER = session['user'], listUser=DBbuild.listAllUsers())
         return redirect(url_for('error'))
 
+    return redirect(url_for('game'))
+
+@myapp.route('/game/', methods = ['GET','POST'])
+def game():
+    return render_template('game.html')
     
 if __name__ == '__main__':
     myapp.debug = True
