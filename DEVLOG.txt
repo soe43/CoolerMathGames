@@ -1,17 +1,23 @@
+taradachukA -- 2018-05-08 13:40:44
+added Devlog 
+
 soeW -- 2018-05-08 13:40:44
-Added Devlog
+added Devlog
 
 luoE -- 2018-05-14 14:03:43
 created game.js, game.html, svg in game
 
 soeW -- 2018-05-14 23:39:05
-Added design document to repo
+added design document to repo
 
 luoE -- 2018-05-15 14:05:03
 line function, started random line function
 
+taradachukA -- 05-16-18 01:57:36
+finished login system
+
 chenX -- 2018-05-17 13:52:00
-Moved files for login. Need to add logout button and also fix bug for signing up for existing account and signing in an account that doesn't exist
+moved files for login. Need to add logout button and also fix bug for signing up for existing account and signing in an account that doesn't exist
 
 chenX -- 2018-05-17 13:59:41
 fixed center issue
@@ -23,5 +29,5 @@ luoE -- 2018-05-18 13:59:55
 continued working on random function (now breaks site)
 
 soeW -- 2018-05-18 14:06:22
-Added new tank.js file to try to draw tank.
+added new tank.js file to try to draw tank.
 
