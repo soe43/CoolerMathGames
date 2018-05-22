@@ -1,4 +1,7 @@
 var svg = document.getElementById("svg");
+var svgHeight = svg.height.baseVal.value
+var svgWidth = svg.width.baseVal.value
+
 
 var makeLine = function( x1, x2, y1, y2 ) {
     var line = document.createElementNS("http://www.w3.org/2000/svg", "line");
@@ -12,12 +15,12 @@ var makeLine = function( x1, x2, y1, y2 ) {
 }
 
 var makeRanLine = function() {
-    var y1 = Math.random()*(150) + 300;
+    var y1 = Math.random()*( ( svgHeight * .9 ) - ( svgHeight * 2 / 3 ) ) + ( svgHeight * 2 / 3 );
     var x1 = 0;
     var x2 = 0;
     var y2 = y1;
     
-    while( x1 < svg.getAttribute('width') ) {
+    while( x1 < svgWidth ) {
 	var changeX = Math.random()*(100) + 10;
 	var changeY = Math.random()*(100) - 50;
 	console.log( 'x1: ' + x1 );
@@ -27,7 +30,7 @@ var makeRanLine = function() {
 	console.log( 'changeX: ' + changeX );
 	console.log( 'changeY: ' + changeY );
 	
-	if( y2 + changeY <= 250 || y2 + changeY >= 500 ) {
+	if( y2 + changeY <= svgHeight / 2 || y2 + changeY >= svgHeight ) {
 	    y2 = y2 - changeY;
 	} else {
 	    y2 = y2 + changeY;
@@ -35,9 +38,10 @@ var makeRanLine = function() {
 	x2 = x2 + changeX;
 	
 	makeLine( x1, x2, y1, y2 );
-	var pts = '' + x1 + ',' + y1 + ' ' + x2 + ',' + y2 + ' ' + x2 + ',' + svg.getAttribute('height') + ' ' + x1 + ',' + svg.getAttribute('height');
+	var pts = '' + x1 + ',' + y1 + ' ' + x2 + ',' + y2 + ' ' + x2 + ',' + svgHeight + ' ' + x1 + ',' + svgHeight;
 	var trap = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
 	trap.setAttribute( 'fill', 'seagreen' );
+	trap.setAttribute( 'points', pts );
 	svg.appendChild(trap);
 	
 	x1 = x2;
@@ -48,10 +52,14 @@ var makeRanLine = function() {
 	console.log( 'y2: ' + y2 );
 	console.log( 'changeX: ' + changeX );
 	console.log( 'changeY: ' + changeY );
-
+	
     }
 }    
 
 //makeLine( 0, 500, 400, 400 );
-makeRanLine();
+//makeRanLine();
+console.log(svgWidth);
+console.log(svgHeight);
+
+
     
