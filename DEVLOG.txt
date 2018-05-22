@@ -31,6 +31,10 @@ continued working on random function (now breaks site)
 soeW -- 2018-05-18 14:06:22
 added new tank.js file to try to draw tank.
 
+luoE -- 2018-05-21 14:05:23
+finished random line
+started working on filling in ground
+
 soeW -- 2018-05-21 14:06:16
 Added more tank components
 
