@@ -51,6 +51,14 @@ var drawTank = function(id, x, y, orientation, fill){
     }
 }
 
+//removes tank with given id from the svg
+var removeTank = function(id){
+    var tank = document.getElementById("tank" + id);
+    console.log 
+    var parent = tank.parentNode;
+    parent.removeChild(tank);
+}
+
 //ONKEYDOWN METHOD
 //Method to move a tank around the map
 //Use the W, A, S, D keys to move
