@@ -34,3 +34,6 @@ added new tank.js file to try to draw tank.
 soeW -- 2018-05-21 14:06:16
 Added more tank components
 
+soeW -- 2018-05-22 01:50:00
+Finished drawing the tank, added jquery to game.html to test key presses for tank movement.
+
