@@ -1,4 +1,6 @@
 var svg = document.getElementById("svg");
+svg.setAttribute("width", window.innerWidth);
+svg.setAttribute("height", window.innerHeight);
 var svgHeight = svg.height.baseVal.value
 var svgWidth = svg.width.baseVal.value
 
@@ -57,7 +59,7 @@ var makeRanLine = function() {
 }    
 
 //makeLine( 0, 500, 400, 400 );
-//makeRanLine();
+$(document).ready(makeRanLine());
 console.log(svgWidth);
 console.log(svgHeight);
 
