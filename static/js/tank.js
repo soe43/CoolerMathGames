@@ -52,11 +52,16 @@ var drawTank = function(id, x, y, orientation, fill){
 }
 
 //removes tank with given id from the svg
+//There's a bug where you need to run this three times to remove all elements of the tank (the cockpit and a wheel remain after the first delete)
 var removeTank = function(id){
-    var tank = document.getElementById("tank" + id);
-    console.log 
-    var parent = tank.parentNode;
-    parent.removeChild(tank);
+    var tank = document.getElementsByClassName("tank" + id);
+    for(var i = 0; i < tank.length; i++){
+	/*var parent = tank[i].parentNode;
+	parent.removeChild(tank[i]);
+	console.log("removed one element.");*/
+	tank[i].remove();
+    }
+    console.log("tank" + id + " removed.");
 }
 
 //ONKEYDOWN METHOD
