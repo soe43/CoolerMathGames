@@ -1,11 +1,12 @@
 var svg = document.getElementById("svg");
 var ns = "http://www.w3.org/2000/svg";
 
-var createCircle = function(cx, cy, r, id){
+var createCircle = function(cx, cy, r, id, orientation){
     var circ = document.createElementNS(ns, "circle");
     circ.setAttribute("cx", cx);
     circ.setAttribute("cy", cy);
     circ.setAttribute("r", 10);
+    circ.setAttribute("orientation", orientation);
     circ.setAttribute("class", "tank" + id);
     svg.appendChild(circ);
 }
@@ -14,20 +15,22 @@ var createCircle = function(cx, cy, r, id){
 //Orientation has NOT been taken into account yet
 //fill changes color of tank, default is black
 var drawTank = function(id, x, y, orientation, fill){
-    var rect = document.createElementNS(ns, "rect");
     var cx = x-25;
     var cy = y-10;
-    rect.setAttribute("x", cx);
-    rect.setAttribute("y", cy);
-    rect.setAttribute("width", 45);
-    rect.setAttribute("height", 20);
-    rect.setAttribute("rx", 5);
-    rect.setAttribute("ry", 5);
-    rect.setAttribute("orientation", orientation);
-    rect.setAttribute("class", "tank" + id);
-    svg.appendChild(rect);
-    createCircle(cx + 10, cy + 15, 10, id);
-    createCircle(cx + 35, cy + 15, 10, id);
+    createCircle(cx + 11, cy + 17, 10, id,orientation);
+    createCircle(cx + 34, cy + 17, 10, id,orientation);
+    createCircle(cx + 22.5,cy+17,10,id,orientation);
+    var body = document.createElementNS(ns, "rect");
+    body.setAttribute("x", cx);
+    body.setAttribute("y", cy);
+    body.setAttribute("width", 45);
+    body.setAttribute("height", 20);
+    body.setAttribute("rx", 5);
+    body.setAttribute("ry", 5);
+    body.setAttribute("orientation", orientation);
+    body.setAttribute("class", "tank" + id);
+    svg.appendChild(body);
+    body.innerHTML = "tank" + id;
     var cockpit = document.createElementNS(ns, "rect");
     cockpit.setAttribute("x", cx + 10);
     cockpit.setAttribute("y", cy - 10);
@@ -45,10 +48,24 @@ var drawTank = function(id, x, y, orientation, fill){
     barrel.setAttribute("class", "tank" + id);
     barrel.setAttribute("id", "barrel");
     svg.appendChild(barrel);
-    var tank = document.getElementsByClassName("tank" + id)
-    for(var i = 0;i < tank.length;i++){
-	tank[i].setAttribute("fill", fill);
+    //to make tank face left
+    if (orientation == 180){
+	cockpit.setAttribute("x", cx + 15);
+	barrel.setAttribute("x", cx - 5);
     }
+    var tank = document.getElementsByClassName("tank" + id)
+    for(var i=0;i < tank.length;i++){
+	tank[i].setAttribute("fill", fill);
+	if(tank[i].tagName == "circle"){
+	    tank[i].setAttribute("fill", "black");
+	}
+    }
+    var tankTag = document.createElementNS(ns, "text");
+    tankTag.setAttributeNS(null, 'x', cx + 7);
+    tankTag.setAttributeNS(null, 'y', cy - 20);
+    tankTag.setAttributeNS(null, 'font-size','10px');
+    tankTag.innerHTML = "tank"+ id;
+    svg.appendChild(tankTag);
 }
 
 //removes tank with given id from the svg
