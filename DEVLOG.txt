@@ -41,3 +41,6 @@ Added more tank components
 soeW -- 2018-05-22 01:50:00
 Finished drawing the tank, added jquery to game.html to test key presses for tank movement.
 
+soeW -- 2018-05-22 23:27:55
+Fixed bug where makeRanLine would not run
+
