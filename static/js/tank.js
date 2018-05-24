@@ -63,20 +63,17 @@ var drawTank = function(id, x, y, orientation, fill){
     var tankTag = document.createElementNS(ns, "text");
     tankTag.setAttributeNS(null, 'x', cx + 7);
     tankTag.setAttributeNS(null, 'y', cy - 20);
+    tankTag.setAttributeNS(null, 'class', "tank" + id);
     tankTag.setAttributeNS(null, 'font-size','10px');
     tankTag.innerHTML = "tank"+ id;
     svg.appendChild(tankTag);
 }
 
 //removes tank with given id from the svg
-//There's a bug where you need to run this three times to remove all elements of the tank (the cockpit and a wheel remain after the first delete)
 var removeTank = function(id){
     var tank = document.getElementsByClassName("tank" + id);
-    for(var i = 0; i < tank.length; i++){
-	/*var parent = tank[i].parentNode;
-	parent.removeChild(tank[i]);
-	console.log("removed one element.");*/
-	tank[i].remove();
+    while(tank.length>0){
+	tank[0].remove();
     }
     console.log("tank" + id + " removed.");
 }
