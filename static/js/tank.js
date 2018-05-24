@@ -12,7 +12,7 @@ var createCircle = function(cx, cy, r, id, orientation){
 }
 
 //Creates a tank at centered at (x,y) with a given id "tank" + id.
-//Orientation has NOT been taken into account yet
+//if orientation = 180, tank faces left, for now every other number faces right
 //fill changes color of tank, default is black
 var drawTank = function(id, x, y, orientation, fill){
     var cx = x-25;
@@ -42,11 +42,11 @@ var drawTank = function(id, x, y, orientation, fill){
     var barrel = document.createElementNS(ns, "rect");
     barrel.setAttribute("x", cx + 25);
     barrel.setAttribute("y", cy - 6);
-    barrel.setAttribute("width", 25);
+    barrel.setAttribute("width", 25); 
     barrel.setAttribute("height", 4);
     barrel.setAttribute("orientation", orientation);
     barrel.setAttribute("class", "tank" + id);
-    barrel.setAttribute("id", "barrel");
+    barrel.setAttribute("id", "barrel" + id);
     svg.appendChild(barrel);
     //to make tank face left
     if (orientation == 180){
@@ -67,6 +67,7 @@ var drawTank = function(id, x, y, orientation, fill){
     tankTag.setAttributeNS(null, 'font-size','10px');
     tankTag.innerHTML = "tank"+ id;
     svg.appendChild(tankTag);
+    
 }
 
 //removes tank with given id from the svg
@@ -77,6 +78,34 @@ var removeTank = function(id){
     }
     console.log("tank" + id + " removed.");
 }
+
+var shoot = function(id, power, angle){
+    var bullet = document.createElementNS(ns, "circ");
+    var barrel = document.getElementById("barrel" + id);
+    var barrelEndX;
+    var barrelEndY;
+    if(barrel.getAttribute("orientation") == 180){
+	var barrelEndX = barrel.getAttribute("x");
+	var barrelEndY = barrel.getAttribute("y") + (barrel.getAttribute("height") / 2);
+    }
+    else{
+	var barrelEndX = barrel.getAttribute("x") + barrel.getAttribute("width");
+	var barrelEndY = barrel.getAttribute("y") + (barrel.getAttribute("height") / 2);
+    }
+    bullet.setAttribute("r", 2);
+    bullet.setAttribute("cx", barrelEndX);
+    bullet.setAttribute("cy", barrelEndY);
+    bullet.setAttribute("fill", "black");
+    svg.appendChild("bullet");
+}
+
+var checkSpace = function(e){
+    var key = e.keyCode || e.which;
+    if(key == 32){
+	shoot(100,0);
+    }
+}
+
 
 //ONKEYDOWN METHOD
 //Method to move a tank around the map

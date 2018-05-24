@@ -4,7 +4,6 @@ svg.setAttribute("height", window.innerHeight);
 var svgHeight = svg.height.baseVal.value
 var svgWidth = svg.width.baseVal.value
 
-
 var makeLine = function( x1, x2, y1, y2 ) {
     var line = document.createElementNS("http://www.w3.org/2000/svg", "line");
     line.setAttribute( 'x1', x1 );
