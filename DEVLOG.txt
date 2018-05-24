@@ -47,3 +47,6 @@ Fixed bug where makeRanLine would not run
 soeW -- 2018-05-23 00:46:42
 Added a remove tank function, but there is a bug where the cockpit and wheel would be left on the svg after removing
 
+soeW -- 2018-05-24 13:40:27
+fixed the bug where the remove tank function took three runs to remove the entire tank
+
