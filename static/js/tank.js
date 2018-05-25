@@ -1,6 +1,8 @@
 var svg = document.getElementById("svg");
 var ns = "http://www.w3.org/2000/svg";
 
+var timerID;
+
 var createCircle = function(cx, cy, r, id, orientation){
     var circ = document.createElementNS(ns, "circle");
     circ.setAttribute("cx", cx);
@@ -79,32 +81,69 @@ var removeTank = function(id){
     console.log("tank" + id + " removed.");
 }
 
+var animateBullet = function(){
+    var cx = 0;
+    var collision = false;
+    stop();
+    var circ = function(){
+	clear();
+	if(cx <= window.innerWidth){
+	    var bullet = document.createElementNS(ns, "circle");
+	    bullet.setAttribute("r", 2);
+	    bullet.setAttribute("cx", cx);
+	    bullet.setAttribute("cy", 250);
+	    cx++;
+	}
+	else{
+	    stop();
+	    clear();
+	}
+    }
+    timerID = setInterval(circ, 10);
+}
+/*
 var shoot = function(id, power, angle){
-    var bullet = document.createElementNS(ns, "circ");
+    var bullet = document.createElementNS(ns, "circle");
     var barrel = document.getElementById("barrel" + id);
     var barrelEndX;
     var barrelEndY;
     if(barrel.getAttribute("orientation") == 180){
-	var barrelEndX = barrel.getAttribute("x");
-	var barrelEndY = barrel.getAttribute("y") + (barrel.getAttribute("height") / 2);
+	var barrelEndX = Number(barrel.getAttribute("x"));
+	var barrelEndY = Number(barrel.getAttribute("y")) + (barrel.getAttribute("height") / 2);
     }
     else{
-	var barrelEndX = barrel.getAttribute("x") + barrel.getAttribute("width");
-	var barrelEndY = barrel.getAttribute("y") + (barrel.getAttribute("height") / 2);
+	var barrelEndX = Number(barrel.getAttribute("x")) + Number(barrel.getAttribute("width"));
+	var barrelEndY = Number(barrel.getAttribute("y")) + (barrel.getAttribute("height") / 2);
     }
     bullet.setAttribute("r", 2);
     bullet.setAttribute("cx", barrelEndX);
     bullet.setAttribute("cy", barrelEndY);
     bullet.setAttribute("fill", "black");
-    svg.appendChild("bullet");
+    svg.appendChild(bullet);
+}
+
+var animateBullet = function(){
+    //var centerX = 
+}
+*/
+    
+var stop = function(){
+    clearInterval(timerID);
+}
+
+var clear = function(){
+    if(document.getElementById("bullet") != null){
+	svg.remove(document.getElementById("bullet"));
+    }
 }
 
 var checkSpace = function(e){
     var key = e.keyCode || e.which;
     if(key == 32){
-	shoot(100,0);
+	shoot(0,100,0);
     }
 }
+
 
 
 //ONKEYDOWN METHOD
@@ -125,6 +164,7 @@ var moveTank = function(event){
     console.log(key);
 }
 
+//$(window).on('keypress', checkSpace);
 $(window).on('keydown', moveTank);
 
 
