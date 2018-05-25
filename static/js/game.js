@@ -15,6 +15,7 @@ var makeLine = function( x1, x2, y1, y2 ) {
     svg.appendChild(line);
 }
 
+//random terrain generation
 var makeRanLine = function() {
     var y1 = Math.random()*( ( svgHeight * .9 ) - ( svgHeight * 2 / 3 ) ) + ( svgHeight * 2 / 3 );
     var x1 = 0;
@@ -39,11 +40,16 @@ var makeRanLine = function() {
 	x2 = x2 + changeX;
 	
 	makeLine( x1, x2, y1, y2 );
+
+	//fills space under ground by making trapezoids
 	var pts = '' + x1 + ',' + y1 + ' ' + x2 + ',' + y2 + ' ' + x2 + ',' + svgHeight + ' ' + x1 + ',' + svgHeight;
 	var trap = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
 	trap.setAttribute( 'fill', 'seagreen' );
 	trap.setAttribute( 'points', pts );
 	svg.appendChild(trap);
+
+	//hides weird vertical white lines a little
+	makeLine( x2, x2, y2, svgHeight );
 	
 	x1 = x2;
 	y1 = y2;
@@ -57,7 +63,6 @@ var makeRanLine = function() {
     }
 }    
 
-//makeLine( 0, 500, 400, 400 );
 $(document).ready(makeRanLine());
 console.log(svgWidth);
 console.log(svgHeight);

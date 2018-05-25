@@ -50,3 +50,5 @@ Added a remove tank function, but there is a bug where the cockpit and wheel wou
 soeW -- 2018-05-24 13:40:27
 fixed the bug where the remove tank function took three runs to remove the entire tank
 
+luoE -- 2018-05-25 14:03:33
+sort of got rid of weird vertical white lines, added some comments
