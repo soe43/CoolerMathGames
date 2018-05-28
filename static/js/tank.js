@@ -44,7 +44,7 @@ var drawTank = function(id, x, y, orientation, fill){
     var barrel = document.createElementNS(ns, "rect");
     barrel.setAttribute("x", cx + 25);
     barrel.setAttribute("y", cy - 6);
-    barrel.setAttribute("width", 25);
+    barrel.setAttribute("width", 31);
     barrel.setAttribute("height", 4);
     barrel.setAttribute("orientation", orientation);
     barrel.setAttribute("class", "tank" + id);
@@ -71,6 +71,7 @@ var drawTank = function(id, x, y, orientation, fill){
     svg.appendChild(tankTag);
 }
 
+//rotates tank
 var toRotate = function(id, angle){
   var idElements = document.getElementsByClassName("tank" + id);
   var center = idElements[3];
@@ -80,6 +81,14 @@ var toRotate = function(id, angle){
     var x = idElements[i];
     x.setAttribute("transform", "rotate(" + angle + " "+ xAtt + " " + yAtt + ")");
   }
+}
+
+var toRotateBarrel = function(id, angle){
+  var idElements = document.getElementsByClassName("tank" + id);
+  var center = idElements[4];
+  var xAtt = parseInt(center.getAttribute('x')) + 10;
+  var yAtt = parseInt(center.getAttribute('y')) + 5;
+  idElements[5].setAttribute("transform", "rotate(" + angle + " "+ xAtt + " " + yAtt + ")");
 }
 
 //removes tank with given id from the svg
