@@ -44,7 +44,7 @@ var drawTank = function(id, x, y, orientation, fill){
     var barrel = document.createElementNS(ns, "rect");
     barrel.setAttribute("x", cx + 25);
     barrel.setAttribute("y", cy - 6);
-    barrel.setAttribute("width", 25); 
+    barrel.setAttribute("width", 25);
     barrel.setAttribute("height", 4);
     barrel.setAttribute("orientation", orientation);
     barrel.setAttribute("class", "tank" + id);
@@ -69,7 +69,17 @@ var drawTank = function(id, x, y, orientation, fill){
     tankTag.setAttributeNS(null, 'font-size','10px');
     tankTag.innerHTML = "tank"+ id;
     svg.appendChild(tankTag);
-    
+}
+
+var toRotate = function(id, angle){
+  var idElements = document.getElementsByClassName("tank" + id);
+  var center = idElements[3];
+  var xAtt = center.getAttribute('x');
+  var yAtt = center.getAttribute('y');
+  for(i = 0; i < idElements.length; i++){
+    var x = idElements[i];
+    x.setAttribute("transform", "rotate(" + angle + " "+ xAtt + " " + yAtt + ")");
+  }
 }
 
 //removes tank with given id from the svg
@@ -123,10 +133,10 @@ var shoot = function(id, power, angle){
 }
 
 var animateBullet = function(){
-    //var centerX = 
+    //var centerX =
 }
 */
-    
+
 var stop = function(){
     clearInterval(timerID);
 }
@@ -166,5 +176,3 @@ var moveTank = function(event){
 
 //$(window).on('keypress', checkSpace);
 $(window).on('keydown', moveTank);
-
-
