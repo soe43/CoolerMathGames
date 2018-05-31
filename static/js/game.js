@@ -4,6 +4,9 @@ svg.setAttribute("height", window.innerHeight);
 var svgHeight = svg.height.baseVal.value
 var svgWidth = svg.width.baseVal.value
 
+var floorPathX = [];
+var floorPathY = [];
+
 var makeLine = function( x1, x2, y1, y2 ) {
     var line = document.createElementNS("http://www.w3.org/2000/svg", "line");
     line.setAttribute( 'x1', x1 );
@@ -25,12 +28,6 @@ var makeRanLine = function() {
     while( x1 < svgWidth ) {
 	var changeX = Math.random()*(100) + 10;
 	var changeY = Math.random()*(100) - 50;
-	console.log( 'x1: ' + x1 );
-	console.log( 'x2: ' + x2 );
-	console.log( 'y1: ' + y1 );
-	console.log( 'y2: ' + y2 );
-	console.log( 'changeX: ' + changeX );
-	console.log( 'changeY: ' + changeY );
 	
 	if( y2 + changeY <= svgHeight / 2 || y2 + changeY >= svgHeight ) {
 	    y2 = y2 - changeY;
@@ -50,22 +47,45 @@ var makeRanLine = function() {
 
 	//hides weird vertical white lines a little
 	makeLine( x2, x2, y2, svgHeight );
+
+
+	//makes floor single path
+	floorPathX.push(x2);
+	floorPathY.push(y2);
 	
 	x1 = x2;
 	y1 = y2;
-	console.log( 'x1: ' + x1 );
-	console.log( 'x2: ' + x2 );
-	console.log( 'y1: ' + y1 );
-	console.log( 'y2: ' + y2 );
-	console.log( 'changeX: ' + changeX );
-	console.log( 'changeY: ' + changeY );
 	
     }
-}    
+}
+
+var floorPath = document.createElementNs("http://www.w3.org/2000/svg", "path");
+
 
 $(document).ready(makeRanLine());
-console.log(svgWidth);
-console.log(svgHeight);
 
+var makeRect = function( x, y, width, height ) {
+    var rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    rect.setAttribute( 'x', x );
+    rect.setAttribute( 'y', y );
+    rect.setAttribute( 'width', width );
+    rect.setAttribute( 'height', height );
+    rect.setAttribute( 'fill', 'seagreen' );
+    svg.appendChild(rect);
+    return rect;
+}
 
+/*function intersectRect(r1, r2) {
+    var r1 = r1.getBoundingClientRect();    //BOUNDING BOX OF THE FIRST OBJECT
+    var r2 = r2.getBoundingClientRect();    //BOUNDING BOX OF THE SECOND OBJECT
+
+    console.log(r1.left);
     
+    //CHECK IF THE TWO BOUNDING BOXES OVERLAP
+  return !(r2.left > r1.right || 
+           r2.right < r1.left || 
+           r2.top > r1.bottom ||
+           r2.bottom < r1.top);
+}*/
+
+console.log(floorPathX);
