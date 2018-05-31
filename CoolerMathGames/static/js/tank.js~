@@ -1,0 +1,2 @@
+var drawTank = function(id, x, y, orientation){
+    

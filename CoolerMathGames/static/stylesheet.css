@@ -16,6 +16,30 @@
     padding: 0;
 }
 
+.lobby_div{
+	margin: 0 auto;
+    width: 500px;
+    height: 500px;
+
+}
+
+.menu{
+	width:85%;
+	margin-bottom:3%;
+}
+
+.lobby_form{
+	width: 500px;
+    height: 500px;
+
+    background: white;
+    border-radius: 10px;
+
+    margin: 0;
+    padding: 0;
+}
+
+
 .form-group{
     padding: 2%;
 }

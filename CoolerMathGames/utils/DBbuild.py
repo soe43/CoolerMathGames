@@ -1,9 +1,12 @@
 import sqlite3   #enable control of an sqlite database
 import csv       #facilitates CSV I/O
+import os
 
+f = os.path.dirname(__file__)+"/../data/users.db"
 
-def createTABLE():
-    f="data/users.db"            
+print("DIR: " + f)
+
+def createTABLE():         
     db=sqlite3.connect(f)              #connects to Datebase to allow editing
     c=db.cursor()
     command = "CREATE TABLE IF NOT EXISTS users (name TEXT, pass TEXT);"   #creates users table if it doesnt exist
@@ -14,7 +17,6 @@ def createTABLE():
 
 
 def insertIntoUserTABLE(tablename, field1, field2):
-    f="data/users.db"
     db=sqlite3.connect(f)         #connects to Datebase to allow editing
     c=db.cursor()
     command = "INSERT INTO %s VALUES('%s', '%s');"%(tablename, field1, field2)       #adds user to User Table
@@ -24,7 +26,6 @@ def insertIntoUserTABLE(tablename, field1, field2):
 
 
 def listUsers(tablename, withPassword, user):
-    f="data/users.db"
     db=sqlite3.connect(f)           #connects to Datebase to allow editing
     c=db.cursor()
     if (withPassword):
@@ -39,7 +40,6 @@ def listUsers(tablename, withPassword, user):
 
 
 def listAllUsers():
-	f="data/users.db"
 	db=sqlite3.connect(f)
 	c=db.cursor()
 	userList=[]
