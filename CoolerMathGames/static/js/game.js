@@ -4,9 +4,6 @@ svg.setAttribute("height", window.innerHeight);
 var svgHeight = svg.height.baseVal.value
 var svgWidth = svg.width.baseVal.value
 
-var floorPathX = [];
-var floorPathY = [];
-
 var makeLine = function( x1, x2, y1, y2 ) {
     var line = document.createElementNS("http://www.w3.org/2000/svg", "line");
     line.setAttribute( 'x1', x1 );
@@ -24,10 +21,15 @@ var makeRanLine = function() {
     var x1 = 0;
     var x2 = 0;
     var y2 = y1;
+    var floorPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    var floorPts = 'M0 '+y2;
+
     
     while( x1 < svgWidth ) {
 	var changeX = Math.random()*(100) + 10;
 	var changeY = Math.random()*(100) - 50;
+
+	floorPts += 'L' + x2 + ' ' + y2 + ' ';
 	
 	if( y2 + changeY <= svgHeight / 2 || y2 + changeY >= svgHeight ) {
 	    y2 = y2 - changeY;
@@ -36,8 +38,8 @@ var makeRanLine = function() {
 	}
 	x2 = x2 + changeX;
 	
-	makeLine( x1, x2, y1, y2 );
-
+	/*makeLine( x1, x2, y1, y2 );
+	
 	//fills space under ground by making trapezoids
 	var pts = '' + x1 + ',' + y1 + ' ' + x2 + ',' + y2 + ' ' + x2 + ',' + svgHeight + ' ' + x1 + ',' + svgHeight;
 	var trap = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
@@ -46,23 +48,29 @@ var makeRanLine = function() {
 	svg.appendChild(trap);
 
 	//hides weird vertical white lines a little
-	makeLine( x2, x2, y2, svgHeight );
+	makeLine( x2, x2, y2, svgHeight );*/
 
 
 	//makes floor single path
-	floorPathX.push(x2);
-	floorPathY.push(y2);
+	
 	
 	x1 = x2;
 	y1 = y2;
-	
+
     }
+    floorPts += 'L' + x2 + ' ' + y2 + ' ';
+    floorPts += 'L' + svgWidth + ' ' + svgHeight + ' L0 ' + svgHeight + ' Z';
+    floorPath.setAttribute( 'd', floorPts );
+    floorPath.setAttribute( 'stroke', 'seagreen' );
+    floorPath.setAttribute( 'stroke-width', '1' );
+    floorPath.setAttribute( 'fill', 'seagreen' );
+    floorPath.setAttribute( 'id', 'flPath' );
+    svg.appendChild( floorPath );
+    console.log(floorPath);
 }
 
-var floorPath = document.createElementNs("http://www.w3.org/2000/svg", "path");
 
-
-$(document).ready(makeRanLine());
+//$(document).ready(makeRanLine());
 
 var makeRect = function( x, y, width, height ) {
     var rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
@@ -73,6 +81,17 @@ var makeRect = function( x, y, width, height ) {
     rect.setAttribute( 'fill', 'seagreen' );
     svg.appendChild(rect);
     return rect;
+}
+
+var testFloor = function() {
+     var floorPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    var floorPts = 'M0 600 L' + svgWidth + ' 600 L' + svgWidth + ' ' + svgHeight + ' L0 ' + svgHeight + ' Z';
+    floorPath.setAttribute( 'd', floorPts );
+    floorPath.setAttribute( 'stroke', 'seagreen' );
+    floorPath.setAttribute( 'stroke-width', '1' );
+    floorPath.setAttribute( 'fill', 'seagreen' );
+    floorPath.setAttribute( 'id', 'testPath' );
+    svg.appendChild( floorPath );
 }
 
 /*function intersectRect(r1, r2) {
@@ -88,4 +107,3 @@ var makeRect = function( x, y, width, height ) {
            r2.bottom < r1.top);
 }*/
 
-console.log(floorPathX);
