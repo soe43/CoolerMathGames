@@ -93,6 +93,26 @@ var testFloor = function() {
     svg.appendChild( floorPath );
 }
 
+var createButton = function(){
+    var a = document.createElementNS("http://www.w3.org/2000/svg", "a");
+    var rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    rect.setAttribute('id', 'lobbyButton');
+    rect.setAttributeNS(null,'x', svgWidth - 120);
+    rect.setAttributeNS(null,'y', 20);
+    rect.setAttributeNS(null,'height', '50');
+    rect.setAttributeNS(null,'width', '100');
+    rect.setAttributeNS(null,'style', 'fill:red');
+    var xlinkNS="http://www.w3.org/1999/xlink";
+    a.setAttributeNS(xlinkNS,"href","/home/");
+    a.appendChild(rect);
+    svg.appendChild(a);
+    var text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    text.setAttribute('x', svgWidth - 95);
+    text.setAttribute('y', 50);
+    text.setAttribute('font-size','18');
+    text.innerHTML = "Lobby";
+    svg.appendChild(text);
+}
 /*function intersectRect(r1, r2) {
     var r1 = r1.getBoundingClientRect();    //BOUNDING BOX OF THE FIRST OBJECT
     var r2 = r2.getBoundingClientRect();    //BOUNDING BOX OF THE SECOND OBJECT
