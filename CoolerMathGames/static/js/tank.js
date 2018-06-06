@@ -120,7 +120,7 @@ var animateBullet = function(){
     }
     timerID = setInterval(circ, 10);
 }
-/*
+
 var shoot = function(id, power, angle){
     var bullet = document.createElementNS(ns, "circle");
     var barrel = document.getElementById("barrel" + id);
@@ -138,13 +138,28 @@ var shoot = function(id, power, angle){
     bullet.setAttribute("cx", barrelEndX);
     bullet.setAttribute("cy", barrelEndY);
     bullet.setAttribute("fill", "black");
+    bullet.setAttribute("id", "bullet");
     svg.appendChild(bullet);
+    while(true/* Not Colliding With Floor Or Another Tank */){
+	animateBullet();
+    }
+    explode();
+}
+
+//Removes bullet from svg and leave behind bullet damage
+var explode = function(type){
+    document.getElementById("bullet").remove();
+    /* Exploding Mechanic*/
+    /* If Colliding With Floor
+       Feature to be implmented later */
+    /* If Colliding With Another Tank*/
+    
 }
 
 var animateBullet = function(){
     //var centerX =
 }
-*/
+
 
 var stop = function(){
     clearInterval(timerID);

@@ -22,7 +22,7 @@ var makeRanLine = function() {
     var x2 = 0;
     var y2 = y1;
     var floorPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    var floorPts = 'M0 '+y2;
+    var floorPts = 'M0 '+ y2;
 
     
     while( x1 < svgWidth ) {
@@ -37,7 +37,8 @@ var makeRanLine = function() {
 	    y2 = y2 + changeY;
 	}
 	x2 = x2 + changeX;
-	
+
+	//OLD WAY WE MADE GROUND. OBSOLETE
 	/*makeLine( x1, x2, y1, y2 );
 	
 	//fills space under ground by making trapezoids
@@ -49,15 +50,12 @@ var makeRanLine = function() {
 
 	//hides weird vertical white lines a little
 	makeLine( x2, x2, y2, svgHeight );*/
-
-
-	//makes floor single path
-	
 	
 	x1 = x2;
 	y1 = y2;
 
     }
+    //makes floor single path	
     floorPts += 'L' + x2 + ' ' + y2 + ' ';
     floorPts += 'L' + svgWidth + ' ' + svgHeight + ' L0 ' + svgHeight + ' Z';
     floorPath.setAttribute( 'd', floorPts );
@@ -83,8 +81,9 @@ var makeRect = function( x, y, width, height ) {
     return rect;
 }
 
+//flat terrain for testing
 var testFloor = function() {
-     var floorPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    var floorPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
     var floorPts = 'M0 600 L' + svgWidth + ' 600 L' + svgWidth + ' ' + svgHeight + ' L0 ' + svgHeight + ' Z';
     floorPath.setAttribute( 'd', floorPts );
     floorPath.setAttribute( 'stroke', 'seagreen' );
@@ -106,4 +105,3 @@ var testFloor = function() {
            r2.top > r1.bottom ||
            r2.bottom < r1.top);
 }*/
-
