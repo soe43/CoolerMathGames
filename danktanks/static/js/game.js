@@ -62,7 +62,7 @@ var makeRanLine = function() {
     floorPath.setAttribute( 'stroke', 'seagreen' );
     floorPath.setAttribute( 'stroke-width', '1' );
     floorPath.setAttribute( 'fill', 'seagreen' );
-    floorPath.setAttribute( 'id', 'flPath' );
+    floorPath.setAttribute( 'class', 'flPath' );
     svg.appendChild( floorPath );
     console.log(floorPath);
 }
@@ -89,7 +89,7 @@ var testFloor = function() {
     floorPath.setAttribute( 'stroke', 'seagreen' );
     floorPath.setAttribute( 'stroke-width', '1' );
     floorPath.setAttribute( 'fill', 'seagreen' );
-    floorPath.setAttribute( 'id', 'testPath' );
+    floorPath.setAttribute( 'class', 'testPath' );
     svg.appendChild( floorPath );
 }
 
@@ -113,9 +113,9 @@ var createButton = function(){
     text.innerHTML = "Lobby";
     svg.appendChild(text);
 }
-/*function intersectRect(r1, r2) {
-    var r1 = r1.getBoundingClientRect();    //BOUNDING BOX OF THE FIRST OBJECT
-    var r2 = r2.getBoundingClientRect();    //BOUNDING BOX OF THE SECOND OBJECT
+/*var intersectRect = function(r1, r2) {
+    var r1 = r1.getBBox();    //BOUNDING BOX OF THE FIRST OBJECT
+    var r2 = r2.getBBox();    //BOUNDING BOX OF THE SECOND OBJECT
 
     console.log(r1.left);
     
@@ -124,4 +124,57 @@ var createButton = function(){
            r2.right < r1.left || 
            r2.top > r1.bottom ||
            r2.bottom < r1.top);
-}*/
+}
+
+var gravity = function(){
+    var terrain = document.getElementsByClassName("flPath");
+
+    var tanks = document.getElementsByClassName("tank0");
+
+    console.log(intersectRect(terrain, tanks));
+}
+
+setInterval(gravity, 30);
+    
+*/
+var moveByVelocity = function(){
+    var terrain = document.getElementsByClassName("testPath")[0];
+    var accelConst = 1.009;
+    var tanks = document.getElementsByClassName("tank0");
+    if (!svg.checkIntersection(tanks[0], terrain.getBBox())){
+	for(var i = 0; i < tanks.length; i++){
+	    if((tanks[i].getAttribute("vy") < 0)){
+	//	console.log(tanks[i].getAttribute("cy") == null);
+		if(tanks[i].getAttribute("cy") != null){
+		    tanks[i].setAttribute("vy",parseFloat(tanks[i].getAttribute("vy")) * accelConst);
+		    tanks[i].setAttribute("cy", parseFloat(tanks[i].getAttribute("cy")) + parseFloat(tanks[i].getAttribute("vy")) * -1);
+		}
+		else{
+		    tanks[i].setAttribute("vy", parseFloat(tanks[i].getAttribute("vy")) * accelConst); 
+		    tanks[i].setAttribute("y", parseFloat(tanks[i].getAttribute("y")) + parseFloat(tanks[i].getAttribute("vy")) * -1);
+		}
+	    }
+	    
+	}
+    }
+    
+}
+var gravity = function(){
+    
+    var terrain = document.getElementsByClassName("testPath")[0];
+    var tanks = document.getElementsByClassName("tank0");
+    if (!svg.checkIntersection(tanks[0], terrain.getBBox())){
+	for(var i = 0; i < tanks.length; i++){
+	    //console.log(tanks[i].getAttribute("vy") == null);
+	    if(tanks[i].getAttribute("vy") == null){
+		tanks[i].setAttribute("vy", -0.1);		
+	    }
+	}
+    }
+}   
+	    
+
+testFloor();
+drawTank(0,250,250,0,"blue");
+setInterval(gravity, 10);
+setInterval(moveByVelocity, 10);
