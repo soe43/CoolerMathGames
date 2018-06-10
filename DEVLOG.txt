@@ -68,3 +68,6 @@ worked on animating bullet
 chenX -- 2018-06-06 13:43:44
 Added Lobby Button to the game
 
+chenX -- 2018-06-10 15:37:00
+appended button + changed gravity function to include different tanks
+
