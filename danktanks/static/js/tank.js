@@ -1,6 +1,7 @@
 var svg = document.getElementById("svg");
 var ns = "http://www.w3.org/2000/svg";
-
+//decides who's turn is it to move by tankID
+var turn = 0;
 var timerID;
 
 var createCircle = function(cx, cy, r, id, orientation){
@@ -153,7 +154,7 @@ var explode = function(type){
     /* If Colliding With Floor
        Feature to be implmented later */
     /* If Colliding With Another Tank*/
-    
+
 }
 
 var animateBullet = function(){
@@ -196,6 +197,22 @@ var checkSpace = function(e){
 var moveTank = function(event){
     var key = event.keyCode || event.which
     console.log(key);
+    if (key == 39 || key == 68){
+      var tank = document.getElementsByClassName("tank" + turn);
+      var currentX = parseInt(tank[3].getAttribute('x')) + 25;
+      var currentY = parseInt(tank[3].getAttribute('y')) + 10;
+      var color = tank[3].getAttribute('fill');
+      removeTank(turn);
+      drawTank(turn,currentX + 2, currentY, 0, color);
+    }
+    if (key == 37 || key == 65){
+      var tank = document.getElementsByClassName("tank" + turn);
+      var currentX = parseInt(tank[3].getAttribute('x')) + 25;
+      var currentY = parseInt(tank[3].getAttribute('y')) + 10;
+      var color = tank[3].getAttribute('fill');
+      removeTank(turn);
+      drawTank(turn,currentX - 2, currentY, 180, color);
+    }
 }
 
 //$(window).on('keypress', checkSpace);

@@ -71,3 +71,6 @@ Added Lobby Button to the game
 chenX -- 2018-06-10 15:37:00
 appended button + changed gravity function to include different tanks
 
+chenX -- 2018-06-10 15:58:04
+tanks are able to move
+
