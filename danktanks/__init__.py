@@ -42,6 +42,10 @@ def home():
 def game():
     return render_template('game.html')
 
+@myapp.route('/multi/', methods = ['GET','POST'])
+def multi():
+    return render_template('multi.html')
+
 @myapp.route('/error/', methods = ['GET', 'POST'])
 def error():
     return render_template ('error.html') #basic error page that leads back to home/login page
