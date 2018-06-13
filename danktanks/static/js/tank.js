@@ -59,13 +59,14 @@ var drawTank = function(x, y, orientation, fill){
 	cockpit.setAttribute("x", cx + 15);
 	barrel.setAttribute("x", cx - 5);
     }
-    var tank = document.getElementsByClassName(tankID)
+    var tank = document.getElementsByClassName("tank" + tankID)
     for(var i=0;i < tank.length;i++){
 	tank[i].setAttribute("fill", fill);
 	if(tank[i].tagName == "circle"){
 	    tank[i].setAttribute("fill", "black");
 	}
     }
+    /*
     var tankTag = document.createElementNS(ns, "text");
     tankTag.setAttributeNS(null, 'x', cx + 7);
     tankTag.setAttributeNS(null, 'y', cy - 20);
@@ -73,6 +74,7 @@ var drawTank = function(x, y, orientation, fill){
     tankTag.setAttributeNS(null, 'font-size','10px');
     tankTag.innerHTML = "tank"+ tankID;
     svg.appendChild(tankTag);
+    */
     tankID++;
 }
 
