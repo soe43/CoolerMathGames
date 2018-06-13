@@ -4,6 +4,8 @@ svg.setAttribute("height", window.innerHeight);
 var svgHeight = svg.height.baseVal.value
 var svgWidth = svg.width.baseVal.value
 
+var turn = 0;
+
 var makeLine = function( x1, x2, y1, y2 ) {
     var line = document.createElementNS("http://www.w3.org/2000/svg", "line");
     line.setAttribute( 'x1', x1 );
@@ -173,12 +175,63 @@ var gravity = function(tankid){
     }
 }
 
+var createBullet = function(id, power, angle){
+    var bullet = document.createElementNS(ns, "circle");
+    var barrel = document.getElementById("barrel" + id);
+    var barrelEndX;
+    var barrelEndY;
+    if(barrel.getAttribute("orientation") == 180){
+	var barrelEndX = Number(barrel.getAttribute("x"));
+	var barrelEndY = Number(barrel.getAttribute("y")) + (barrel.getAttribute("height") / 2);
+    }
+    else{
+	var barrelEndX = Number(barrel.getAttribute("x")) + Number(barrel.getAttribute("width"));
+	var barrelEndY = Number(barrel.getAttribute("y")) + (barrel.getAttribute("height") / 2);
+    }
+    bullet.setAttribute("r", 2);
+    bullet.setAttribute("cx", barrelEndX);
+    bullet.setAttribute("cy", barrelEndY);
+    bullet.setAttribute("fill", "black");
+    bullet.setAttribute("id", "bullet");
+    svg.appendChild(bullet);
+}
+
+//Removes bullet from svg and leave behind bullet damage
+var explode = function(type){
+    document.getElementById("bullet").remove();
+    /* Exploding Mechanic*/
+    /* If Colliding With Floor
+       Feature to be implmented later */
+    /* If Colliding With Another Tank*/
+}
+
+var checkTurn = function(){
+    if(turn == 0){
+	createBullet(0, 100, 0);
+	turn = 1;
+    }
+    if(turn == 1){
+	createBullet(1, 100, 0);
+	turn = 0;
+    }
+}
+
+var shot = function(event){
+    var key = event.keyCode || event.which;
+    console.log(key);
+    if(key == 32){
+	checkTurn();
+    }
+}
+
 
 testFloor();
-drawTank(0,250,250,0,"blue");
-drawTank(1,svgWidth - 250,250,180,"red");
+drawTank(250,250,0,"blue");
+drawTank(svgWidth - 250,250,180,"red");
 createButton();
 setInterval(gravity, 10, 0);
 setInterval(moveByVelocity, 10, 0);
 setInterval(gravity, 10, 1);
 setInterval(moveByVelocity, 10, 1);
+
+$(window).on('keydown', shot);

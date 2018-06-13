@@ -107,86 +107,6 @@ var removeTank = function(id){
     console.log("tank" + id + " removed.");
 }
 
-var animateBullet = function(){
-    var cx = 0;
-    var collision = false;
-    stop();
-    var circ = function(){
-	clear();
-	if(cx <= window.innerWidth){
-	    var bullet = document.createElementNS(ns, "circle");
-	    bullet.setAttribute("r", 2);
-	    bullet.setAttribute("cx", cx);
-	    bullet.setAttribute("cy", 250);
-	    cx++;
-	}
-	else{
-	    stop();
-	    clear();
-	}
-    }
-    timerID = setInterval(circ, 10);
-}
-
-var shoot = function(id, power, angle){
-    var bullet = document.createElementNS(ns, "circle");
-    var barrel = document.getElementById("barrel" + id);
-    var barrelEndX;
-    var barrelEndY;
-    if(barrel.getAttribute("orientation") == 180){
-	var barrelEndX = Number(barrel.getAttribute("x"));
-	var barrelEndY = Number(barrel.getAttribute("y")) + (barrel.getAttribute("height") / 2);
-    }
-    else{
-	var barrelEndX = Number(barrel.getAttribute("x")) + Number(barrel.getAttribute("width"));
-	var barrelEndY = Number(barrel.getAttribute("y")) + (barrel.getAttribute("height") / 2);
-    }
-    bullet.setAttribute("r", 2);
-    bullet.setAttribute("cx", barrelEndX);
-    bullet.setAttribute("cy", barrelEndY);
-    bullet.setAttribute("fill", "black");
-    bullet.setAttribute("id", "bullet");
-    svg.appendChild(bullet);
-    while(true/* Not Colliding With Floor Or Another Tank */){
-	animateBullet();
-    }
-    explode();
-}
-
-//Removes bullet from svg and leave behind bullet damage
-var explode = function(type){
-    document.getElementById("bullet").remove();
-    /* Exploding Mechanic*/
-    /* If Colliding With Floor
-       Feature to be implmented later */
-    /* If Colliding With Another Tank*/
-
-}
-
-var animateBullet = function(){
-    //var centerX =
-}
-
-
-var stop = function(){
-    clearInterval(timerID);
-}
-
-var clear = function(){
-    if(document.getElementById("bullet") != null){
-	svg.remove(document.getElementById("bullet"));
-    }
-}
-
-var checkSpace = function(e){
-    var key = e.keyCode || e.which;
-    if(key == 32){
-	shoot(0,100,0);
-    }
-}
-
-
-
 //ONKEYDOWN METHOD
 //Method to move a tank around the map
 //Use the W, A, S, D keys to move
@@ -222,4 +142,4 @@ var moveTank = function(event){
 }
 
 //$(window).on('keypress', checkSpace);
-$(window).on('keydown', moveTank);
+//$(window).on('keydown', moveTank);
