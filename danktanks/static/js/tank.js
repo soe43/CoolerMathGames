@@ -13,19 +13,19 @@ var createCircle = function(cx, cy, r, id, orientation){
     circ.setAttribute("cy", cy);
     circ.setAttribute("r", 10);
     circ.setAttribute("orientation", orientation);
-    circ.setAttribute("class", "tank" + tankID);
+    circ.setAttribute("class", "tank" + id);
     svg.appendChild(circ);
 }
 
 //Creates a tank at centered at (x,y) with a given id "tank" + id.
 //if orientation = 180, tank faces left, for now every other number faces right
 //fill changes color of tank, default is black
-var drawTank = function(x, y, orientation, fill){
+var drawTank = function(x, y, orientation, fill, id){
     var cx = x-25;
     var cy = y-10;
-    createCircle(cx + 11, cy + 17, 10, tankID,orientation);
-    createCircle(cx + 34, cy + 17, 10, tankID,orientation);
-    createCircle(cx + 22.5,cy+17,10, tankID,orientation);
+    createCircle(cx + 11, cy + 17, 10, id,orientation);
+    createCircle(cx + 34, cy + 17, 10, id,orientation);
+    createCircle(cx + 22.5, cy+17, 10, id,orientation);
     var body = document.createElementNS(ns, "rect");
     body.setAttribute("x", cx);
     body.setAttribute("y", cy);
@@ -34,16 +34,16 @@ var drawTank = function(x, y, orientation, fill){
     body.setAttribute("rx", 5);
     body.setAttribute("ry", 5);
     body.setAttribute("orientation", orientation);
-    body.setAttribute("class", "tank" + tankID);
+    body.setAttribute("class", "tank" + id);
     svg.appendChild(body);
-    body.innerHTML = "tank" + tankID;
+    body.innerHTML = "tank" + id;
     var cockpit = document.createElementNS(ns, "rect");
     cockpit.setAttribute("x", cx + 10);
     cockpit.setAttribute("y", cy - 10);
     cockpit.setAttribute("width", 20);
     cockpit.setAttribute("height", 10);
     cockpit.setAttribute("orientation", orientation);
-    cockpit.setAttribute("class", "tank"+tankID);
+    cockpit.setAttribute("class", "tank"+id);
     svg.appendChild(cockpit);
     var barrel = document.createElementNS(ns, "rect");
     barrel.setAttribute("x", cx + 25);
@@ -51,15 +51,15 @@ var drawTank = function(x, y, orientation, fill){
     barrel.setAttribute("width", 31);
     barrel.setAttribute("height", 4);
     barrel.setAttribute("orientation", orientation);
-    barrel.setAttribute("class", "tank" + tankID);
-    barrel.setAttribute("id", "barrel" + tankID);
+    barrel.setAttribute("class", "tank" + id);
+    barrel.setAttribute("id", "barrel" + id);
     svg.appendChild(barrel);
     //to make tank face left
     if (orientation == 180){
 	cockpit.setAttribute("x", cx + 15);
 	barrel.setAttribute("x", cx - 5);
     }
-    var tank = document.getElementsByClassName("tank" + tankID)
+    var tank = document.getElementsByClassName("tank" + id)
     for(var i=0;i < tank.length;i++){
 	tank[i].setAttribute("fill", fill);
 	if(tank[i].tagName == "circle"){
@@ -75,7 +75,6 @@ var drawTank = function(x, y, orientation, fill){
     tankTag.innerHTML = "tank"+ tankID;
     svg.appendChild(tankTag);
     */
-    tankID++;
 }
 
 //rotates tank
@@ -112,10 +111,10 @@ var removeTank = function(id){
 //Use the W, A, S, D keys to move
 //Arrow Keys work too
 //KEYCODES:
-//W -> 119
-//A -> 97
-//S -> 115
-//D -> 100
+//W -> 87
+//A -> 65
+//S -> 83
+//D -> 68
 //Left -> 37
 //Up -> 38
 //Right -> 39
@@ -124,22 +123,24 @@ var moveTank = function(event){
     var key = event.keyCode || event.which
     console.log(key);
     if (key == 39 || key == 68){
-      var tank = document.getElementsByClassName("tank" + turn);
-      var currentX = parseInt(tank[3].getAttribute('x')) + 25;
-      var currentY = parseInt(tank[3].getAttribute('y')) + 10;
-      var color = tank[3].getAttribute('fill');
-      removeTank(turn);
-      drawTank(turn,currentX + 2, currentY, 0, color);
+	var tank = document.getElementsByClassName("tank" + turn);
+	var currentX = parseInt(tank[3].getAttribute('x')) + 25;
+	var currentY = parseInt(tank[3].getAttribute('y')) + 10;
+	var color = tank[3].getAttribute('fill');
+	removeTank(turn);
+	drawTank(currentX + 2, currentY, 0, color, turn);
+	console.log(key);
     }
     if (key == 37 || key == 65){
-      var tank = document.getElementsByClassName("tank" + turn);
-      var currentX = parseInt(tank[3].getAttribute('x')) + 25;
-      var currentY = parseInt(tank[3].getAttribute('y')) + 10;
-      var color = tank[3].getAttribute('fill');
-      removeTank(turn);
-      drawTank(turn,currentX - 2, currentY, 180, color);
+	var tank = document.getElementsByClassName("tank" + turn);
+	var currentX = parseInt(tank[3].getAttribute('x')) + 25;
+	var currentY = parseInt(tank[3].getAttribute('y')) + 10;
+	var color = tank[3].getAttribute('fill');
+	removeTank(turn);
+	drawTank(currentX - 2, currentY, 180, color, turn);
+	console.log(key);
     }
 }
 
 //$(window).on('keypress', checkSpace);
-//$(window).on('keydown', moveTank);
+$(window).on('keydown', moveTank);

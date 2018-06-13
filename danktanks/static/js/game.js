@@ -226,8 +226,8 @@ var shot = function(event){
 
 
 testFloor();
-drawTank(250,250,0,"blue");
-drawTank(svgWidth - 250,250,180,"red");
+drawTank(250,250,0,"blue", 0);
+drawTank(svgWidth - 250,250,180,"red", 1);
 createButton();
 setInterval(gravity, 10, 0);
 setInterval(moveByVelocity, 10, 0);
@@ -235,3 +235,4 @@ setInterval(gravity, 10, 1);
 setInterval(moveByVelocity, 10, 1);
 
 $(window).on('keydown', shot);
+
