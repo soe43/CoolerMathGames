@@ -225,6 +225,28 @@ var shot = function(event){
 }
 
 
+var animateBullet = function(){
+    var cx = 0;
+    var collision = false;
+    stop();
+    var circ = function(){
+	clear();
+	if(cx <= window.innerWidth){
+	    var bullet = document.createElementNS(ns, "circle");
+	    bullet.setAttribute("r", 2);
+	    bullet.setAttribute("cx", cx);
+	    bullet.setAttribute("cy", 250);
+	    cx++;
+	}
+	else{
+	    stop();
+	    clear();
+	}
+    }
+    timerID = setInterval(circ, 10);
+}
+
+
 testFloor();
 drawTank(250,250,0,"blue");
 drawTank(svgWidth - 250,250,180,"red");
