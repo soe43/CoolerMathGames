@@ -115,38 +115,16 @@ var createButton = function(){
     a.appendChild(text);
     svg.appendChild(a);
 }
-/*var intersectRect = function(r1, r2) {
-    var r1 = r1.getBBox();    //BOUNDING BOX OF THE FIRST OBJECT
-    var r2 = r2.getBBox();    //BOUNDING BOX OF THE SECOND OBJECT
 
-    console.log(r1.left);
-
-    //CHECK IF THE TWO BOUNDING BOXES OVERLAP
-  return !(r2.left > r1.right ||
-           r2.right < r1.left ||
-           r2.top > r1.bottom ||
-           r2.bottom < r1.top);
-}
-
-var gravity = function(){
-    var terrain = document.getElementsByClassName("flPath");
-
-    var tanks = document.getElementsByClassName("tank0");
-
-    console.log(intersectRect(terrain, tanks));
-}
-
-setInterval(gravity, 30);
-
-*/
 var moveByVelocity = function(tankid){
     var terrain = document.getElementsByClassName("testPath")[0];
     var accelConst = 1.009;
-    var tanks = document.getElementsByClassName("tank" + tankid);
-    if (!svg.checkIntersection(tanks[0], terrain.getBBox())){
-	for(var i = 0; i < tanks.length; i++){
+    var tanks = Array.prototype.slice.call(document.getElementsByClassName("tank" + tankid));
+    tanks.push(Array.prototype.slice.call(document.getElementsByClassName("bullet"))[0]);
+    for(var i = 0; i < tanks.length; i++){
+	if (!svg.checkIntersection(tanks[0], terrain.getBBox())){
 	    if((tanks[i].getAttribute("vy") < 0)){
-	//	console.log(tanks[i].getAttribute("cy") == null);
+		//	console.log(tanks[i].getAttribute("cy") == null);
 		if(tanks[i].getAttribute("cy") != null){
 		    tanks[i].setAttribute("vy",parseFloat(tanks[i].getAttribute("vy")) * accelConst);
 		    tanks[i].setAttribute("cy", parseFloat(tanks[i].getAttribute("cy")) + parseFloat(tanks[i].getAttribute("vy")) * -1);
@@ -156,24 +134,48 @@ var moveByVelocity = function(tankid){
 		    tanks[i].setAttribute("y", parseFloat(tanks[i].getAttribute("y")) + parseFloat(tanks[i].getAttribute("vy")) * -1);
 		}
 	    }
-
+	}
+	if (i == 6 && !svg.checkIntersection(tanks[6], terrain.getBBox())){
+	    tanks[i].setAttribute("vy",parseFloat(tanks[i].getAttribute("vy")) * accelConst);
+	    tanks[i].setAttribute("cy", parseFloat(tanks[i].getAttribute("cy")) + parseFloat(tanks[i].getAttribute("vy")) * -1);
 	}
     }
-
 }
+
+
 var gravity = function(tankid){
 
     var terrain = document.getElementsByClassName("testPath")[0];
-    var tanks = document.getElementsByClassName("tank" + tankid);
-    if (!svg.checkIntersection(tanks[0], terrain.getBBox())){
-	for(var i = 0; i < tanks.length; i++){
+    var tanks = Array.prototype.slice.call(document.getElementsByClassName("tank" + tankid));
+    tanks.push(Array.prototype.slice.call(document.getElementsByClassName("bullet"))[0]);
+    console.log(tanks);
+    for(var i = 0; i < tanks.length; i++){
+	if (!svg.checkIntersection(tanks[0], terrain.getBBox())){
 	    //console.log(tanks[i].getAttribute("vy") == null);
 	    if(tanks[i].getAttribute("vy") == null){
 		tanks[i].setAttribute("vy", -0.1);
 	    }
+	    
+	}
+	if (i == 6 && !svg.checkIntersection(tanks[6], terrain.getBBox())){
+	    console.log(tanks[i].getAttribute("vy"));
+	    if(tanks[i].getAttribute("vy") == 0){
+		console.log("So did I");
+		tanks[i].setAttribute("vy", -0.1);
+	    }
+	}
+    }
+    if(svg.checkIntersection(tanks[6], terrain.getBBox())){
+	explode();
+	if(turn == 0){
+	    turn = 1;
+	}
+	else{
+	    turn = 0;
 	}
     }
 }
+
 
 var createBullet = function(id, power, angle){
     var bullet = document.createElementNS(ns, "circle");
@@ -191,14 +193,15 @@ var createBullet = function(id, power, angle){
     bullet.setAttribute("r", 2);
     bullet.setAttribute("cx", barrelEndX);
     bullet.setAttribute("cy", barrelEndY);
+    bullet.setAttribute("vy", 0);
     bullet.setAttribute("fill", "black");
-    bullet.setAttribute("id", "bullet");
+    bullet.setAttribute("class", "bullet");
     svg.appendChild(bullet);
 }
 
 //Removes bullet from svg and leave behind bullet damage
-var explode = function(type){
-    document.getElementById("bullet").remove();
+var explode = function(){
+    document.getElementsByClassName("bullet")[0].remove();
     /* Exploding Mechanic*/
     /* If Colliding With Floor
        Feature to be implmented later */
@@ -208,11 +211,9 @@ var explode = function(type){
 var checkTurn = function(){
     if(turn == 0){
 	createBullet(0, 100, 0);
-	turn = 1;
     }
     if(turn == 1){
 	createBullet(1, 100, 0);
-	turn = 0;
     }
 }
 
@@ -248,8 +249,8 @@ var animateBullet = function(){
 
 
 testFloor();
-drawTank(250,250,0,"blue");
-drawTank(svgWidth - 250,250,180,"red");
+drawTank(250,250,0,"blue", 0);
+drawTank(svgWidth - 250,250,180,"red", 1);
 createButton();
 setInterval(gravity, 10, 0);
 setInterval(moveByVelocity, 10, 0);
@@ -257,3 +258,4 @@ setInterval(gravity, 10, 1);
 setInterval(moveByVelocity, 10, 1);
 
 $(window).on('keydown', shot);
+

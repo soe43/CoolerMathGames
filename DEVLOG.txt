@@ -64,13 +64,18 @@ remade random terrain generator into single path (multiple lines w/ trapezoids s
 luoE, soeW -- 2018-06-04 14:04:28
 worked on animating bullet
 
-
 chenX -- 2018-06-06 13:43:44
 Added Lobby Button to the game
+
+chenX, luoE -- 2018-06-08 14:05:02
+worked on bullet arc/drawing parabola
 
 chenX -- 2018-06-10 15:37:00
 appended button + changed gravity function to include different tanks
 
 chenX -- 2018-06-10 15:58:04
 tanks are able to move
+
+luoE -- 2018-06-13 00:48:43
+tanks can move again with button presses, worked on meshing game.js/tank.js
 
