@@ -164,6 +164,21 @@ var gravity = function(tankid){
 		tanks[i].setAttribute("vy", -0.1);
 	    }
 	}
+	else if (i == 6 && tankid == 0){
+	    var tank1 = document.getElementByClassName("tank1");
+	    if(!svg.checkIntersection(tanks[6], tank1[3].getBBox())){
+		//damage tank1
+		console.log("hit tank1");
+	    }
+	}
+	/*
+	else if (i == 6 && tankid == 1){
+	    var tank0 = document.getElementByClassName("tank0");
+	    if(!svg.checkIntersection(tanks[6], tank0[3])){
+		//damage tank0
+	    }
+	}
+	*/
     }
     if(svg.checkIntersection(tanks[6], terrain.getBBox())){
 	explode();
