@@ -119,6 +119,7 @@ var createButton = function(){
 var moveByVelocity = function(tankid){
     var terrain = document.getElementsByClassName("testPath")[0];
     var accelConst = 1.009;
+    var decelConst = .9994;
     var tanks = Array.prototype.slice.call(document.getElementsByClassName("tank" + tankid));
     tanks.push(Array.prototype.slice.call(document.getElementsByClassName("bullet"))[0]);
     for(var i = 0; i < tanks.length; i++){
@@ -136,6 +137,13 @@ var moveByVelocity = function(tankid){
 	    }
 	}
 	if (i == 6 && !svg.checkIntersection(tanks[6], terrain.getBBox())){
+	    tanks[i].setAttribute("vx", parseFloat(tanks[i].getAttribute("vx")) * decelConst);
+	    if(tanks[i].getAttribute("orientation") == 0){
+		tanks[i].setAttribute("cx", parseFloat(tanks[i].getAttribute("cx")) + parseFloat(tanks[i].getAttribute("vy")));
+	    }
+	    else{
+		tanks[i].setAttribute("cx", parseFloat(tanks[i].getAttribute("cx")) + parseFloat(tanks[i].getAttribute("vy")));
+	    }
 	    tanks[i].setAttribute("vy",parseFloat(tanks[i].getAttribute("vy")) * accelConst);
 	    tanks[i].setAttribute("cy", parseFloat(tanks[i].getAttribute("cy")) + parseFloat(tanks[i].getAttribute("vy")) * -1);
 	}
@@ -192,7 +200,7 @@ var gravity = function(tankid){
 }
 
 
-var createBullet = function(id, power, angle){
+var createBullet = function(id, power, angle, orientation){
     var bullet = document.createElementNS(ns, "circle");
     var barrel = document.getElementById("barrel" + id);
     var barrelEndX;
@@ -208,9 +216,11 @@ var createBullet = function(id, power, angle){
     bullet.setAttribute("r", 2);
     bullet.setAttribute("cx", barrelEndX);
     bullet.setAttribute("cy", barrelEndY);
+    bullet.setAttribute("vx", power);
     bullet.setAttribute("vy", 0);
     bullet.setAttribute("fill", "black");
     bullet.setAttribute("class", "bullet");
+    bullet.setAttribute("orientation", orientation);
     svg.appendChild(bullet);
 }
 
@@ -225,10 +235,10 @@ var explode = function(){
 
 var checkTurn = function(){
     if(turn == 0){
-	createBullet(0, 100, 0);
+	createBullet(0, 100, 0,this.getAttribute("orientation"));
     }
     if(turn == 1){
-	createBullet(1, 100, 0);
+	createBullet(1, 100, 0,this.getAttribute("orientation"));
     }
 }
 
