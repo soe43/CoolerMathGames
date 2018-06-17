@@ -3,11 +3,12 @@ svg.setAttribute("width", window.innerWidth);
 svg.setAttribute("height", window.innerHeight);
 var svgHeight = svg.height.baseVal.value
 var svgWidth = svg.width.baseVal.value
+var ns = "http://www.w3.org/2000/svg";
 
 var turn = 0;
 
 var makeLine = function( x1, x2, y1, y2 ) {
-    var line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    var line = document.createElementNS(ns, "line");
     line.setAttribute( 'x1', x1 );
     line.setAttribute( 'x2', x2 );
     line.setAttribute( 'y1', y1 );
@@ -23,7 +24,7 @@ var makeRanLine = function() {
     var x1 = 0;
     var x2 = 0;
     var y2 = y1;
-    var floorPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    var floorPath = document.createElementNS(ns, "path");
     var floorPts = 'M0 '+ y2;
 
 
@@ -73,7 +74,7 @@ var makeRanLine = function() {
 //$(document).ready(makeRanLine());
 
 var makeRect = function( x, y, width, height ) {
-    var rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    var rect = document.createElementNS(ns, "rect");
     rect.setAttribute( 'x', x );
     rect.setAttribute( 'y', y );
     rect.setAttribute( 'width', width );
@@ -85,7 +86,7 @@ var makeRect = function( x, y, width, height ) {
 
 //flat terrain for testing
 var testFloor = function() {
-    var floorPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    var floorPath = document.createElementNS(ns, "path");
     var floorPts = 'M0 600 L' + svgWidth + ' 600 L' + svgWidth + ' ' + svgHeight + ' L0 ' + svgHeight + ' Z';
     floorPath.setAttribute( 'd', floorPts );
     floorPath.setAttribute( 'stroke', 'seagreen' );
@@ -96,20 +97,20 @@ var testFloor = function() {
 }
 
 var createButton = function(){
-    var a = document.createElementNS("http://www.w3.org/2000/svg", "a");
-    var rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    var a = document.createElementNS(ns, "a");
+    var rect = document.createElementNS(ns, "rect");
     rect.setAttribute('id', 'lobbyButton');
     rect.setAttributeNS(null,'x', svgWidth - 120);
-    rect.setAttributeNS(null,'y', 20);
+    rect.setAttributeNS(null,'y', 75);
     rect.setAttributeNS(null,'height', '50');
     rect.setAttributeNS(null,'width', '100');
     rect.setAttributeNS(null,'style', 'fill:red');
     var xlinkNS="http://www.w3.org/1999/xlink";
     a.setAttributeNS(xlinkNS,"href","/home/");
     a.appendChild(rect);
-    var text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    var text = document.createElementNS(ns, "text");
     text.setAttribute('x', svgWidth - 95);
-    text.setAttribute('y', 50);
+    text.setAttribute('y', 105);
     text.setAttribute('font-size','18');
     text.innerHTML = "Lobby";
     a.appendChild(text);
@@ -273,6 +274,34 @@ var animateBullet = function(){
 }
 
 
+var leftHP = document.createElementNS(ns, 'rect');
+leftHP.setAttribute('x', 50);
+leftHP.setAttribute('y', 25);
+leftHP.setAttribute('width', 150);
+leftHP.setAttribute('height', 33);
+leftHP.setAttribute('fill', 'green');
+leftHP.setAttribute('id', 'leftHP');
+svg.appendChild(leftHP);
+
+var rightHP = document.createElementNS(ns, 'rect');
+rightHP.setAttribute('x', svgWidth - 170);
+rightHP.setAttribute('y', 25);
+rightHP.setAttribute('width', 150);
+rightHP.setAttribute('height', 33);
+rightHP.setAttribute('fill', 'green');
+rightHP.setAttribute('id', 'rightHP');
+svg.appendChild(rightHP);
+
+//tankHit = the tank that was hit. 0 for left tank, 1 for right tank.
+var changeHP = function( tankHit ) {
+    if( tankHit == 0 ) {
+	leftHP.setAttribute( 'width', Number(leftHP.getAttribute('width')) - 50 );
+    } else {
+	rightHP.setAttribute( 'width', Number(rightHP.getAttribute('width')) - 50 );
+    }
+}
+
+
 testFloor();
 drawTank(250,250,0,"blue", 0);
 drawTank(svgWidth - 250,250,180,"red", 1);
@@ -283,4 +312,3 @@ setInterval(gravity, 10, 1);
 setInterval(moveByVelocity, 10, 1);
 
 $(window).on('keydown', shot);
-

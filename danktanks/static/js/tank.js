@@ -142,5 +142,6 @@ var moveTank = function(event){
     }
 }
 
+
 //$(window).on('keypress', checkSpace);
 $(window).on('keydown', moveTank);
